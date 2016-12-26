@@ -5,12 +5,12 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "package":"electron-packager ./ --platform win32 --arch=ia32 --overwrite --asar"
+    "package": "electron-packager ./ --platform win32 --arch=ia32 --overwrite --asar"
   },
   "devDependencies": {
-  "electron-prebuilt": "^1.2.0"
+    "electron": "^1.4.13",
+    "electron-packager": "^8.4.0"
   },
-
   "author": "lilg",
   "license": "ISC"
 }

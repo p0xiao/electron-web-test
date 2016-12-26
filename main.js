@@ -38,7 +38,7 @@ const menuTemplate = [{
   submenu: [{
     label: '更新',
     click: function() {
-      electron.shell.openExternal('localhost:8080')
+      electron.shell.openExternal('http://hmp.dev.cim120.cn');
     }
   }, {
     label: '开发者工具',
@@ -62,36 +62,26 @@ rightMenu.append(new MenuItem({
 
 function createWindow() {
   mainWindow = new BrowserWindow({
+    title: 'HMP',
     width: 1440,
     height: 900
+    // webPreferences: {
+    //   nodeIntegration: false
+    // }
     // frame: false
   });
 
-  // mainWindow.loadURL('http://localhost:8080');
-  mainWindow.loadURL('file://' + __dirname + "/index.html");
-
-  mainWindow.webContents.openDevTools();
+  mainWindow.loadURL('http://localhost:8080');
+  // mainWindow.loadURL('file://' + __dirname + "/index.html");
+  // mainWindow.webContents.executeJavaScript(`
+  //     document.getElementById("testBtn").addEventListener("click", function() {
+  //       require("electron").ipcRenderer.send("quit");
+  //     });
+  // `);
+  // mainWindow.webContents.openDevTools();
 
   let menu = Menu.buildFromTemplate(menuTemplate);
   Menu.setApplicationMenu(menu);
-
-  //http request
-  // let options = {
-  //   host: 'localhost',
-  //   port: 8080,
-  //   path: '/task/illtype/list/ajax?uid=1904142'
-  // };
-  // let req = http.request(options, function(res) {
-  //   res.setEncoding('utf8');
-  //   res.on('data', function(data) {
-  //     console.log(data);
-  //   });
-  //   res.on('end', () => {
-  //     console.log('No more data in response.');
-  //   });
-  // });
-  // req.write('');
-  // req.end();
 }
 
 function createTray() {
@@ -128,4 +118,8 @@ app.on('browser-window-created', function(event, win) {
   win.webContents.on('context-menu', function(e, params) {
     rightMenu.popup(win, params.x, params.y);
   });
+});
+
+ipc.on('quit', function(event) {
+  electron.shell.openExternal('http://hmp.dev.cim120.cn');
 });

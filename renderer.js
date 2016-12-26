@@ -1,33 +1,30 @@
-// window.onresize = doLayout;
-
-const $ = require('jquery');
-
-var webview = document.querySelector('webview');
-
-
+window.onresize = doLayout;
+let webview = document.querySelector('webview');
 onload = function() {
-     var loadstart = function() {
-       console.log("1");
-     }
-     var loadstop = function() {
-       console.log("2");
-     }
-     webview.addEventListener("did-start-loading", loadstart);
-     webview.addEventListener("did-stop-loading", loadstop);
+  doLayout();
 }
+
+webview.addEventListener('dom-ready', function() {
+  // webview.executeJavaScript('test("exe")', false, function() {
+  //   console.log('webview');
+  // });
+  // webview.executeJavaScript('document.getElementById("clickBtn").value="test"');
+});
+
+webview.addEventListener('console-message', (e) => {
+  console.log('Guest page message:', e.message);
+  if(e.message == 'click') {
+    webview.executeJavaScript('testBack("callback")');
+  }
+});
 
 function doLayout() {
+  var webview = document.querySelector('webview');
+  var windowWidth = document.documentElement.clientWidth;
+  var windowHeight = document.documentElement.clientHeight;
+  var webviewWidth = windowWidth;
+  var webviewHeight = windowHeight;
 
+  webview.style.width = webviewWidth + 'px';
+  webview.style.height = webviewHeight + 'px';
 }
-webview.addEventListener("dom-ready", function() {
-  webview.openDevTools();
-  var  hmp_login = $('.hmp_login');
-  console.log(hmp_login);
-  // hmp_login.addEventListener('click', abc);
-});
-var abc  = function(){
-
-}
-// $('.hmp_login').onclick = function() {
-// console.log("dddddd");
-// };
