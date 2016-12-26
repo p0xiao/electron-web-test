@@ -28,8 +28,6 @@ webview.addEventListener("dom-ready", function() {
 var abc  = function(){
 
 }
-
-
 // $('.hmp_login').onclick = function() {
 // console.log("dddddd");
 // };
